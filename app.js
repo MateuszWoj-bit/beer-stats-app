@@ -1,4 +1,8 @@
-document.addEventListener("DOMContentLoaded", getBeerInfo);
+document.addEventListener("DOMContentLoaded", () => {
+  const reloadButton = document.getElementById("reload-button");
+  reloadButton.addEventListener("click", getBeerInfo);
+  getBeerInfo();
+});
 
 async function getBeerInfo() {
   try {
