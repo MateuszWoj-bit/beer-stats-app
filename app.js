@@ -1,30 +1,48 @@
+let currentBeerIndex = 0;
 document.addEventListener("DOMContentLoaded", () => {
   const reloadButton = document.getElementById("reload-button");
   const previousButton = document.getElementById("previous-button");
   const nextButton = document.getElementById("next-button");
 
+  // reload powinien znieniać index na 0
   reloadButton.addEventListener("click", getBeerInfo);
   previousButton.addEventListener("click", showPreviousBeer);
   nextButton.addEventListener("click", showNextBeer);
 
-  // Initialize with the first beer if local storage is empty.
+
   if (!localStorage.getItem("currentBeerIndex")) {
     localStorage.setItem("currentBeerIndex", 0);
   }
-
   getBeerInfo();
 });
 
+
+const tableJSON = localStorage.getItem("table");
+
+let table = [];
+if (tableJSON) {
+  table = JSON.parse(tableJSON);
+}
+
+const updatedTableJSON = JSON.stringify(table);
+localStorage.setItem("table", updatedTableJSON);
+
 async function getBeerInfo() {
   try {
-    const currentBeerIndex = parseInt(
-      localStorage.getItem("currentBeerIndex"),
-      10
-    );
     const response = await fetch("https://api.punkapi.com/v2/beers/random");
     const data = await response.json();
 
-    const beer = data[0];
+    let beer = data[0];
+    console.log(currentBeerIndex);
+    if (currentBeerIndex !== 0) {
+      beer = table[currentBeerIndex];
+    } else {
+      table.push(beer);     
+      const updatedTableJSON = JSON.stringify(table);  
+      localStorage.setItem("table", updatedTableJSON);
+    }
+    console.log(beer);
+
     const beerImage = document.getElementById("beer-image");
     const beerName = document.getElementById("beer-name");
     const beerTagline = document.getElementById("beer-tagline");
@@ -40,10 +58,10 @@ async function getBeerInfo() {
     beerFoodPairing.textContent =
       "Food Pairing: " + beer.food_pairing.join(", ");
 
-    // Save the current beer index to local storage.
+    
     localStorage.setItem("currentBeerIndex", currentBeerIndex);
 
-    // Update navigation buttons' visibility.
+    
     updateNavigationButtons(currentBeerIndex);
   } catch (error) {
     console.error("Error fetching beer information:", error);
@@ -51,7 +69,7 @@ async function getBeerInfo() {
 }
 
 function showPreviousBeer() {
-  let currentBeerIndex = parseInt(localStorage.getItem("currentBeerIndex"), 10);
+  currentBeerIndex = parseInt(localStorage.getItem("currentBeerIndex"), 10);
   if (currentBeerIndex > 0) {
     currentBeerIndex--;
     localStorage.setItem("currentBeerIndex", currentBeerIndex);
@@ -60,7 +78,7 @@ function showPreviousBeer() {
 }
 
 function showNextBeer() {
-  let currentBeerIndex = parseInt(localStorage.getItem("currentBeerIndex"), 10);
+  currentBeerIndex = parseInt(localStorage.getItem("currentBeerIndex"), 10);
   currentBeerIndex++;
   localStorage.setItem("currentBeerIndex", currentBeerIndex);
   getBeerInfo();
@@ -71,5 +89,5 @@ function updateNavigationButtons(currentBeerIndex) {
   const nextButton = document.getElementById("next-button");
 
   previousButton.disabled = currentBeerIndex === 0;
-  nextButton.disabled = false; // Assuming there's always a "next" beer.
+  nextButton.disabled = false; 
 }
