@@ -9,13 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
   previousButton.addEventListener("click", showPreviousBeer);
   nextButton.addEventListener("click", showNextBeer);
 
-
   if (!localStorage.getItem("currentBeerIndex")) {
     localStorage.setItem("currentBeerIndex", 0);
   }
   getBeerInfo();
 });
-
 
 const tableJSON = localStorage.getItem("table");
 
@@ -29,17 +27,17 @@ localStorage.setItem("table", updatedTableJSON);
 
 async function getBeerInfo() {
   try {
-    const response = await fetch("https://api.punkapi.com/v2/beers/random");
-    const data = await response.json();
-
-    let beer = data[0];
+    let beer;
     console.log(currentBeerIndex);
-    if (currentBeerIndex !== 0) {
-      beer = table[currentBeerIndex];
+    if (currentBeerIndex === 0) {
+       const response = await fetch("https://api.punkapi.com/v2/beers/random");
+       const data = await response.json();
+       let beer = data[0];
+       table.push(beer);
+       const updatedTableJSON = JSON.stringify(table);
+       localStorage.setItem("table", updatedTableJSON);    
     } else {
-      table.push(beer);     
-      const updatedTableJSON = JSON.stringify(table);  
-      localStorage.setItem("table", updatedTableJSON);
+       beer = table[currentBeerIndex];
     }
     console.log(beer);
 
@@ -58,10 +56,7 @@ async function getBeerInfo() {
     beerFoodPairing.textContent =
       "Food Pairing: " + beer.food_pairing.join(", ");
 
-    
     localStorage.setItem("currentBeerIndex", currentBeerIndex);
-
-    
     updateNavigationButtons(currentBeerIndex);
   } catch (error) {
     console.error("Error fetching beer information:", error);
@@ -89,5 +84,5 @@ function updateNavigationButtons(currentBeerIndex) {
   const nextButton = document.getElementById("next-button");
 
   previousButton.disabled = currentBeerIndex === 0;
-  nextButton.disabled = false; 
+  nextButton.disabled = false;
 }
