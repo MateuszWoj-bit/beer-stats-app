@@ -1,6 +1,6 @@
 🎃🎃🎃
 
-# Beer Stats Web App
+# Beer Stats Web App 🍻
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/MateuszWoj-bit/beer-stats-app)
 
@@ -9,11 +9,11 @@ This web app, hosted on GitHub, displays random beer information and provides na
 ## Features
 
 - Display of random beer information, including:
-  - Name
-  - Tagline
-  - Description
-  - Image
-  - Food Pairing Suggestions
+  - Name 🍺
+  - Tagline 🏷️
+  - Description 📗
+  - Image 🖼️
+  - Food Pairing Suggestions 🍲
 - Navigation buttons:
   - **Previous Beer**: View the details of the previously displayed beer.
   - **Reload Beer**: Fetch a new random beer from the Punk API.
