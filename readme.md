@@ -9,11 +9,11 @@ This web app, hosted on GitHub, displays random beer information and provides na
 ## Features
 
 - Display of random beer information, including:
-  - Name 🍺
-  - Tagline 🏷️
-  - Description 📗
-  - Image 🖼️
-  - Food Pairing Suggestions 🍲
+  - Name🍺
+  - Tagline🏷️
+  - Description📗
+  - Image🖼️
+  - Food Pairing Suggestions🍲
 - Navigation buttons:
   - **Previous Beer**: View the details of the previously displayed beer.
   - **Reload Beer**: Fetch a new random beer from the Punk API.
