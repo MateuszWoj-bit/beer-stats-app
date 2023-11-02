@@ -1,5 +1,3 @@
-🎃🎃🎃 
-
 # Beer Stats Web App 🍻
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/MateuszWoj-bit/beer-stats-app)
